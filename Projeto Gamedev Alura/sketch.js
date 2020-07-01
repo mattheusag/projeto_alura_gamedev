@@ -1,16 +1,48 @@
 let imagemCenario;
 let imagemPersonagem;
+let imagemInimigo
 let alturaDaPersonagem = 135;
 let cenario;
 // let somdojogo
 let personagem
-
+let inimigo 
+const matrizInimigo = [
+	[0, 0],
+	[104, 0],
+	[208, 0],
+	[312, 0],
+	[0, 104],
+	[104, 104],
+	[208, 104],
+	[312, 104],
+	[0, 208],
+	[104, 208],
+	[208, 208],
+	[312, 208],
+	[0, 312],
+	[104, 312],
+	[208, 312],
+	[312, 312],
+	[0, 418],
+	[104, 418],
+	[208, 418],
+	[312, 418],
+	[0, 522],
+	[104, 522],
+	[208, 522],
+	[312, 522],
+	[0, 626],
+	[104, 626],
+	[208, 626],
+	[312, 626],
+  ]
 
  // o loadImage é uma função do p5.js , conseguimos acessar por conta do nosso acesso a biblioteca no index.html
 function preload() {
 	imagemCenario = loadImage ('imagens/cenario/floresta.png')
 	imagemPersonagem = loadImage ('imagens/personagem/correndo.png')
 	// somdojogo = loadSound('sons/trilha.mp3') // Não estou conseguindo carregar o som adequadamente.
+	imagemInimigo = loadImage ('imagens/inimigos/gotinha.png')
 }
 
 function setup() {
@@ -18,13 +50,18 @@ function setup() {
 	cenario = new Cenario(imagemCenario, 3) // aqui é minha velocidade
 	// somdojogo.play()
 	personagem = new Personagem(imagemPersonagem)
+	inimigo = new Inimigo(matrizInimigo, imagemInimigo, width-52, 52, 52, 104, 104)  // instanciar 
 	frameRate(40) // velocidade de carregamento 
   }
   
   function draw() {
 	cenario.exibe() // chamar exibe
 	cenario.move() // chamar move
+
 	personagem.exibe()
+	inimigo.exibe()
+	inimigo.move()
+
 
   }
 
