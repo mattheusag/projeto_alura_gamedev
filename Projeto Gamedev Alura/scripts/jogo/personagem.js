@@ -1,9 +1,10 @@
 
 class Personagem extends Animacao {
-    constructor(matriz, imagem, x, largura, altura, larguraSprite, alturaSprite){
-        super(matriz, imagem, x, largura, altura, larguraSprite, alturaSprite)
+    constructor(matriz, imagem, x, variacaoY, largura, altura, larguraSprite, alturaSprite){
+        super(matriz, imagem, x, variacaoY, largura, altura, larguraSprite, alturaSprite)
 
-        this.yInicial = height - this.altura
+        this.variacaoY = variacaoY
+        this.yInicial = height - this.altura - variacaoY
         this.y = this.yInicial 
 
         this.velocidadeDoPulo = 0 
@@ -15,7 +16,7 @@ class Personagem extends Animacao {
         this.velocidadeDoPulo =  -30
     }
 
-    aplicaGravidade(){
+    aplicaGravidade(){ //basicamente a parabola do plano cartesiano
         this.y = this.y + this.velocidadeDoPulo 
         this.velocidadeDoPulo = this.velocidadeDoPulo + this.gravidade
 

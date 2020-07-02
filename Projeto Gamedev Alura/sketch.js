@@ -1,11 +1,16 @@
-let imagemCenario;
-let imagemPersonagem;
+let imagemCenario
+let imagemPersonagem
 let imagemInimigo
-let alturaDaPersonagem = 135;
-let cenario;
-// let somdojogo
+let imagemInimigoGrande
+let imagemInimigoVoador
+let alturaDaPersonagem = 135
+let cenario
 let personagem
 let inimigo 
+let inimigoGrande
+let inimigoVoador
+let pontuacao
+
 const matrizInimigo = [
 	[0, 0],
 	[104, 0],
@@ -36,18 +41,71 @@ const matrizInimigo = [
 	[208, 626],
 	[312, 626],
   ]
+const matrizInimigoGrande = [
+	[0,0],
+	[400,0],
+	[800,0],
+	[1200,0],
+	[1600,0],
+	[0,400],
+	[400,400],
+	[800,400],
+	[1200, 400],
+	[1600, 400],
+	[0,800],
+	[400, 800],
+	[800, 800],
+	[1200, 800],
+	[1600, 800],
+	[0, 1200],
+	[400, 1200],
+	[800, 1200],
+	[1200, 1200],
+	[1600, 1200], 
+	[0, 1600],
+	[400, 1600],
+	[800, 1600],
+	[1200, 1600],
+	[1600, 1600],
+	[0, 2000],
+	[400, 2000],
+	[800, 2000],
+  ]
 const matrizPersonagem = this.matriz = [ 
 	[0,0],  [220,0],  [440,0], [660,0],
 	[0,270], [220,270], [440,270], [660,270],
 	[0,540], [220,540], [440,540], [660,540],
 	[0,810], [220,810], [440,810], [660,810]
   ]
+  const matrizInimigoVoador =  [
+	[0,0],
+	[200, 0],
+	[400, 0],
+	[0, 150],
+	[200, 150],
+	[400, 150],
+	[0, 300],
+	[200, 300],
+	[400, 300],
+	[0, 450],
+	[200, 450],
+	[400, 450],
+	[0, 600],
+	[200, 600],
+	[400, 600],
+	[0, 750],
+  ]
+
+const inimigos = []
+
   // essa matriz é o mapeamento da imagem da personagem. A imagem da personagem é composta de 16 figuras diferentes que simulam a movimentação. 
 
  // o loadImage e loadSound são funções do p5.js , conseguimos acessar por conta do nosso acesso a biblioteca no index.html
 function preload() {
 	imagemCenario = loadImage ('imagens/cenario/floresta.png')
 	imagemPersonagem = loadImage ('imagens/personagem/correndo.png')
+	imagemInimigoGrande = loadImage ('imagens/inimigos/troll.png')
+	imagemInimigoVoador = loadImage ('imagens/inimigos/gotinha-voadora.png')
 	somDoPulo = loadSound('sons/somPulo.mp3') 
 	somDoJogo = loadSound('sons/trilha_jogo.mp3')
 
@@ -57,9 +115,16 @@ function preload() {
 function setup() {
 	createCanvas(windowWidth, windowHeight)
 	cenario = new Cenario(imagemCenario, 3) // aqui é minha velocidade
+	pontuacao = new Pontuacao()
 
-	personagem = new Personagem(matrizPersonagem, imagemPersonagem, 0, 110, 135, 220, 270)
-	inimigo = new Inimigo(matrizInimigo, imagemInimigo, width-52, 52, 52, 104, 104)  // instanciar 
+	personagem = new Personagem(matrizPersonagem, imagemPersonagem, 0, 30, 110, 135, 220, 270) // aumentar o 110 e o 135 eventualmente
+	const inimigo = new Inimigo(matrizInimigo, imagemInimigo, width-52, 30, 52, 52, 104, 104, 10, 200)  // instanciar  aumentar o 52 e o 52 eventualmente
+	const inimigoGrande = new Inimigo(matrizInimigoGrande, imagemInimigoGrande, width, 0, 200, 200, 400, 400, 10, 1500) // matriz, imagem, x, variacaoY, largura, altura, larguraSprite, alturaSprite, velocidade, delay
+	const inimigoVoador = new Inimigo(matrizInimigoVoador, imagemInimigoVoador, width - 52, 200, 100, 75, 200, 150, 10, 2500)
+	
+		inimigos.push(inimigo)
+		inimigos.push(inimigoGrande)
+		inimigos.push(inimigoVoador)
 	frameRate(40) // velocidade de carregamento 
 	
   }
@@ -80,15 +145,20 @@ function setup() {
 	cenario.exibe() // chamar exibe
 	cenario.move() // chamar move
 
+	pontuacao.exibe()
+	pontuacao.adicionarPonto()
+	
 	personagem.exibe()
 	personagem.aplicaGravidade()
 
-	inimigo.exibe()
-	inimigo.move()
+	inimigos.forEach(inimigo => {
+		inimigo.exibe()
+		inimigo.move()
+		if (personagem.estaColidindo(inimigo)){
+			noLoop()
+			}
+	})
 
-	if (personagem.estaColidindo(inimigo)){
-		noLoop()
-	}
 	
   }
 

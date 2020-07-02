@@ -1,13 +1,14 @@
 // atraves deste codigo iremos controlar a animação tanto do nosso personagem quanto dos inimigos
 
 class Animacao {
-    constructor(matriz, imagem, x, largura, altura, larguraSprite, alturaSprite) { // x = posicionamento dele ta tela , largura e altura é o tamanho que aparecerá na tela, o largurasSprite e alturaSprite é na imagem do mapa 
+    constructor(matriz, imagem, x, variacaoY, largura, altura, larguraSprite, alturaSprite) { // x = posicionamento dele ta tela , largura e altura é o tamanho que aparecerá na tela, o largurasSprite e alturaSprite é na imagem do mapa 
         this.matriz = matriz
         this.imagem = imagem
         this.largura = largura
         this.altura = altura
         this.x = x 
-        this.y = height - this.altura // ATENÇÃO AQUI
+        this.variacaoY = variacaoY
+        this.y = height - this.altura - variacaoY
         this.larguraSprite = larguraSprite
         this.alturaSprite = alturaSprite
 
