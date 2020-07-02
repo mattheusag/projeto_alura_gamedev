@@ -8,12 +8,18 @@ class Personagem extends Animacao {
         this.y = this.yInicial 
 
         this.velocidadeDoPulo = 0 
-        this.gravidade = 3 
+        this.gravidade = 6
+        this.alturaDoPulo = -50
+        this.pulos = 0 
 
     }
 
     pula(){
-        this.velocidadeDoPulo =  -30
+        if (this.pulos < 3) {
+            this.velocidadeDoPulo =  this.alturaDoPulo
+            this.pulos++
+        }
+      
     }
 
     aplicaGravidade(){ //basicamente a parabola do plano cartesiano
@@ -22,6 +28,7 @@ class Personagem extends Animacao {
 
         if(this.y > this.yInicial){ // para que ele nao caia infinitamente
             this.y = this.yInicial //garanto com isso qu toda vez que meu y passar de this.yInicial, ele volte para this.yInicial 
+            this.pulos = 0 // resetar o pulo
         }
     }
 // x da personagem, y da personagem, largura e altura do personagem

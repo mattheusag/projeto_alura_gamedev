@@ -3,6 +3,7 @@ let imagemPersonagem
 let imagemInimigo
 let imagemInimigoGrande
 let imagemInimigoVoador
+let imagemGameOver
 let alturaDaPersonagem = 135
 let cenario
 let personagem
@@ -10,6 +11,9 @@ let inimigo
 let inimigoGrande
 let inimigoVoador
 let pontuacao
+let inimigoAtual = 0
+
+
 
 const matrizInimigo = [
 	[0, 0],
@@ -103,6 +107,7 @@ const inimigos = []
  // o loadImage e loadSound são funções do p5.js , conseguimos acessar por conta do nosso acesso a biblioteca no index.html
 function preload() {
 	imagemCenario = loadImage ('imagens/cenario/floresta.png')
+	imagemGameOver = loadImage ('imagens/assets/game-over.png')
 	imagemPersonagem = loadImage ('imagens/personagem/correndo.png')
 	imagemInimigoGrande = loadImage ('imagens/inimigos/troll.png')
 	imagemInimigoVoador = loadImage ('imagens/inimigos/gotinha-voadora.png')
@@ -119,8 +124,8 @@ function setup() {
 
 	personagem = new Personagem(matrizPersonagem, imagemPersonagem, 0, 30, 110, 135, 220, 270) // aumentar o 110 e o 135 eventualmente
 	const inimigo = new Inimigo(matrizInimigo, imagemInimigo, width-52, 30, 52, 52, 104, 104, 10, 200)  // instanciar  aumentar o 52 e o 52 eventualmente
-	const inimigoGrande = new Inimigo(matrizInimigoGrande, imagemInimigoGrande, width, 0, 200, 200, 400, 400, 10, 1500) // matriz, imagem, x, variacaoY, largura, altura, larguraSprite, alturaSprite, velocidade, delay
-	const inimigoVoador = new Inimigo(matrizInimigoVoador, imagemInimigoVoador, width - 52, 200, 100, 75, 200, 150, 10, 2500)
+	const inimigoGrande = new Inimigo(matrizInimigoGrande, imagemInimigoGrande, width, 0, 200, 200, 400, 400, 10, 0) // matriz, imagem, x, variacaoY, largura, altura, larguraSprite, alturaSprite, velocidade, delay
+	const inimigoVoador = new Inimigo(matrizInimigoVoador, imagemInimigoVoador, width - 52, 200, 100, 75, 200, 150, 10, 0)
 	
 		inimigos.push(inimigo)
 		inimigos.push(inimigoGrande)
@@ -151,15 +156,29 @@ function setup() {
 	personagem.exibe()
 	personagem.aplicaGravidade()
 
-	inimigos.forEach(inimigo => {
-		inimigo.exibe()
-		inimigo.move()
-		if (personagem.estaColidindo(inimigo)){
-			noLoop()
-			}
-	})
+
+	const inimigo = inimigos[inimigoAtual] // Para saber qual será nosso inimigo atual na tela
+	const inimigoVisivel = inimigo.x < -inimigo.largura // saber se ele já passou todo
+
+	inimigo.exibe()
+	inimigo.move()
+
+	if (inimigoVisivel){
+		inimigoAtual++
+		if (inimigoAtual > 2) {
+			inimigoAtual = 0
+		}
+		inimigo.velocidade = parseInt(random(5,30))
+	}
+
+
+
+	if (personagem.estaColidindo(inimigo)){
+		image(imagemGameOver, width/2 - 200, height/3)
+		noLoop()
+		}
+	}
 
 	
-  }
 
   
