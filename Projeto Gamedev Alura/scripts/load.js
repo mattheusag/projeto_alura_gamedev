@@ -10,5 +10,6 @@
 	somDoJogo = loadSound('sons/trilha_jogo.mp3')
     imagemInimigo = loadImage ('imagens/inimigos/gotinha.png')
     imagemTelaInicial = loadImage ('imagens/assets/telaInicial.png')
+    imagemVida = loadImage ('imagens/assets/coracao.png')
     fonteTelaInicial = loadFont ('imagens/assets/fonteTelaInicial.otf')
 }

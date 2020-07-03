@@ -5,6 +5,7 @@ let imagemInimigoGrande
 let imagemInimigoVoador
 let imagemGameOver
 let imagemTelaInicial
+let imagemVida
 let fonteTelaInicial
 let alturaDaPersonagem = 135
 let cenario
@@ -15,10 +16,12 @@ let inimigoVoador
 let pontuacao
 let jogo
 
-let cenaAtual = 'telaInicial'
+let cenaAtual = 'jogo'
 let cenas
 let telaInicial
 let botaoGerenciador
+let vida
+
 
 const matrizInimigo = [
 	[0, 0],

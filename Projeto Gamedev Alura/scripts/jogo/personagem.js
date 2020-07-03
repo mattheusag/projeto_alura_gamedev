@@ -11,7 +11,7 @@ class Personagem extends Animacao {
         this.gravidade = 6
         this.alturaDoPulo = -50
         this.pulos = 0 
-
+        this.invencivel = false 
     }
 
     pula(){
@@ -31,8 +31,20 @@ class Personagem extends Animacao {
             this.pulos = 0 // resetar o pulo
         }
     }
+
+    tornarInvencivel (){
+        this.invencivel = true
+        setTimeout(() => { // nativo do Javascript 
+            this.invencivel = false
+        }, 1000) // quantos milisegundos ela vai ficar invencivel  
+    }
+
+
 // x da personagem, y da personagem, largura e altura do personagem
     estaColidindo(inimigo){
+        if (this.invencivel) { // se estiver invencivel, ignora 
+            return false
+        }
         const precisao = .65 // o hitbox dos dois é maior do que o tamanho reald eles, para corrigir isso precisamos aplicar essa constante, original é .7
         const colisao = collideRectRect(
             this.x, 

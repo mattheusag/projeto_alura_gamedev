@@ -6,7 +6,7 @@ class Jogo {
     setup(){
         cenario = new Cenario(imagemCenario, 3) // aqui é minha velocidade
         pontuacao = new Pontuacao()
-    
+        vida = new Vida(3, 3)
         personagem = new Personagem(matrizPersonagem, imagemPersonagem, 0, 30, 110, 135, 220, 270) // aumentar o 110 e o 135 eventualmente
         const inimigo = new Inimigo(matrizInimigo, imagemInimigo, width-52, 30, 52, 52, 104, 104, 10, 100)  // instanciar  aumentar o 52 e o 52 eventualmente
         const inimigoGrande = new Inimigo(matrizInimigoGrande, imagemInimigoGrande, width, 0, 200, 200, 400, 400, 15, 100) // matriz, imagem, x, variacaoY, largura, altura, larguraSprite, alturaSprite, velocidade, delay
@@ -34,6 +34,7 @@ class Jogo {
         cenario.exibe() // chamar exibe
         cenario.move() // chamar move
     
+        vida.draw()
         pontuacao.exibe()
         pontuacao.adicionarPonto()
         
@@ -54,8 +55,15 @@ class Jogo {
             inimigo.velocidade = parseInt(random(5,30))
         }
         if (personagem.estaColidindo(inimigo)){
-            image(imagemGameOver, width/2 - 200, height/3)
-            noLoop()
+            
+            vida.perdeVida()
+            personagem.tornarInvencivel()
+
+            if (vida.vidas === 0){
+                image(imagemGameOver, width/2 - 200, height/3)
+                noLoop()
+            }
+           // 
             }
     }
 }
