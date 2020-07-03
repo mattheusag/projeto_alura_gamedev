@@ -15,8 +15,9 @@ let inimigoGrande
 let inimigoVoador
 let pontuacao
 let jogo
+let fita
 
-let cenaAtual = 'jogo'
+let cenaAtual = 'telaInicial'
 let cenas
 let telaInicial
 let botaoGerenciador

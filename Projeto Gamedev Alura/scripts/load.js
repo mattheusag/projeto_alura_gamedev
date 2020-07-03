@@ -12,4 +12,5 @@
     imagemTelaInicial = loadImage ('imagens/assets/telaInicial.png')
     imagemVida = loadImage ('imagens/assets/coracao.png')
     fonteTelaInicial = loadFont ('imagens/assets/fonteTelaInicial.otf')
+    fita = loadJSON('fita/fita.json')
 }
